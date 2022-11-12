@@ -3,40 +3,40 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kfx_flutter/extensions/date_time/relative_time.dart';
 
 void main() {
-  test("DateTime extension RelativeTime tests", () {
-    final now = DateTime(2000, 6, 15, 12, 30, 30);
+  final now = DateTime(2000, 6, 15, 12, 30, 30);
+  final tests = <DateTime, String>{};
 
-    expect(now.add(const Duration(seconds: 30)).toRelativeString(now: now), "now");
-    expect(now.add(const Duration(seconds: 60)).toRelativeString(now: now), "1 min");
-    expect(now.add(const Duration(seconds: 90)).toRelativeString(now: now), "1 min");
-    expect(now.add(const Duration(seconds: 119)).toRelativeString(now: now), "1 min");
-    expect(now.add(const Duration(seconds: 120)).toRelativeString(now: now), "2 min");
+  tests[now.add(const Duration(seconds: 3))] = "now";
+  tests[now.add(const Duration(seconds: 60))] = "1 min";
+  tests[now.add(const Duration(seconds: 90))] = "1 min";
+  tests[now.add(const Duration(seconds: 119))] = "1 min";
+  tests[now.add(const Duration(seconds: 120))] = "2 min";
+  tests[now.add(const Duration(minutes: 15))] = "15 min";
+  tests[now.add(const Duration(minutes: 30))] = "30 min";
+  tests[now.add(const Duration(minutes: 45))] = "45 min";
+  tests[now.add(const Duration(minutes: 59))] = "59 min";
+  tests[now.add(const Duration(minutes: 60))] = "1 hr";
+  tests[now.add(const Duration(minutes: 90))] = "1½ hr";
+  tests[now.add(const Duration(minutes: 120))] = "2 hr";
+  tests[now.add(const Duration(minutes: 150))] = "2½ hr";
+  tests[now.add(const Duration(hours: 23, minutes: 59, seconds: 59))] = "23½ hr";
+  tests[now.add(const Duration(hours: 24))] = "1 day";
+  tests[now.add(const Duration(hours: 36))] = "1 day";
+  tests[now.add(const Duration(hours: 48))] = "2 days";
+  tests[now.add(const Duration(hours: 72))] = "3 days";
+  tests[now.add(const Duration(days: 7))] = "a week";
+  tests[now.add(const Duration(days: 9))] = "a week";
+  tests[now.add(const Duration(days: 14))] = "2 weeks";
+  tests[now.add(const Duration(days: 21))] = "3 weeks";
+  tests[now.add(const Duration(days: 28))] = "1 month";
+  tests[DateTime(now.year, now.month + 1, now.day, now.hour, now.minute, now.second)] = "1 month";
+  tests[DateTime(now.year, now.month + 2, now.day, now.hour, now.minute, now.second)] = "2 months";
+  tests[DateTime(now.year, now.month + 11, now.day, now.hour, now.minute, now.second)] = "11 months";
+  tests[DateTime(now.year, now.month + 12, now.day, now.hour, now.minute, now.second)] = "a year";
 
-    expect(now.add(const Duration(minutes: 15)).toRelativeString(now: now), "15 min");
-    expect(now.add(const Duration(minutes: 30)).toRelativeString(now: now), "30 min");
-    expect(now.add(const Duration(minutes: 45)).toRelativeString(now: now), "45 min");
-    expect(now.add(const Duration(minutes: 59)).toRelativeString(now: now), "59 min");
+  for (final testEntry in tests.entries) {
+    final description = "${now} to ${testEntry.key} = ${testEntry.value}";
 
-    expect(now.add(const Duration(minutes: 60)).toRelativeString(now: now), "1 hr");
-    expect(now.add(const Duration(minutes: 90)).toRelativeString(now: now), "1½ hr");
-    expect(now.add(const Duration(minutes: 120)).toRelativeString(now: now), "2 hr");
-    expect(now.add(const Duration(minutes: 150)).toRelativeString(now: now), "2½ hr");
-    expect(now.add(const Duration(hours: 23, minutes: 59, seconds: 59)).toRelativeString(now: now), "23½ hr");
-
-    expect(now.add(const Duration(hours: 24)).toRelativeString(now: now), "1 day");
-    expect(now.add(const Duration(hours: 36)).toRelativeString(now: now), "1 day");
-    expect(now.add(const Duration(hours: 48)).toRelativeString(now: now), "2 days");
-    expect(now.add(const Duration(hours: 72)).toRelativeString(now: now), "3 days");
-
-    expect(now.add(const Duration(days: 7)).toRelativeString(now: now), "a week");
-    expect(now.add(const Duration(days: 9)).toRelativeString(now: now), "a week");
-    expect(now.add(const Duration(days: 14)).toRelativeString(now: now), "2 weeks");
-    expect(now.add(const Duration(days: 21)).toRelativeString(now: now), "3 weeks");
-    expect(now.add(const Duration(days: 28)).toRelativeString(now: now), "1 month");
-
-    expect(DateTime(now.year, now.month + 1, now.day, now.hour, now.minute, now.second).toRelativeString(now: now), "1 month");
-    expect(DateTime(now.year, now.month + 2, now.day, now.hour, now.minute, now.second).toRelativeString(now: now), "2 months");
-    expect(DateTime(now.year, now.month + 11, now.day, now.hour, now.minute, now.second).toRelativeString(now: now), "11 months");
-    expect(DateTime(now.year, now.month + 12, now.day, now.hour, now.minute, now.second).toRelativeString(now: now), "a year");
-  });
+    test(description, () => expect(testEntry.key.toRelativeString(now: now), testEntry.value));
+  }
 }
