@@ -55,7 +55,7 @@ const _texts = {
 };
 
 String _i18n(String text, [String? languageCode = "en"]) {
-  final textLanguages = _texts[text] ?? {"en": "{'${text}' is not translated}"};
+  final textLanguages = _texts[text] ?? {"en": "{'$text' is not translated}"};
 
-  return textLanguages[languageCode] ?? textLanguages["en"] ?? "{'${text}' not translated to ${languageCode}}";
+  return textLanguages[languageCode] ?? textLanguages["en"] ?? "{'$text' not translated to $languageCode}";
 }

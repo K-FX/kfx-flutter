@@ -35,7 +35,7 @@ void main() {
   tests[DateTime(now.year, now.month + 12, now.day, now.hour, now.minute, now.second)] = "a year";
 
   for (final testEntry in tests.entries) {
-    final description = "${now} to ${testEntry.key} = ${testEntry.value}";
+    final description = "$now to ${testEntry.key} = ${testEntry.value}";
 
     test(description, () => expect(testEntry.key.toRelativeString(now: now), testEntry.value));
   }
