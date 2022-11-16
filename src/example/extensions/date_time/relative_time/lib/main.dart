@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
                   initialData: now.toRelativeString(),
                   builder: (context, asyncSnapshot) => _ExampleCard(title: "Widget built", text: asyncSnapshot.data!),
                 ),
+                const SizedBox(width: 16, height: 16),
                 _ExampleCard(title: "Flying cars", date: DateTime(2015, 10, 21)),
               ],
             ),
