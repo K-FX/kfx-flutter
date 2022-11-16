@@ -1,3 +1,5 @@
+![building](https://github.com/K-FX/kfx-flutter/actions/workflows/dart.yml/badge.svg)
+
 # Features
 
 This is a personal helper library I use to make Flutter applications, with internacionalization support (initially, in English and Portuguese, as the latter is my mother tongue)
