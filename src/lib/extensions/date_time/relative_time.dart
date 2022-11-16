@@ -1,5 +1,7 @@
 library kfx_flutter;
 
+import 'dart:ui';
+
 part 'relative_time.i18n.dart';
 
 /// [DateTime] extensions for relative past time (ex.: 2 months to something happened 2 months ago)

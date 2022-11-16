@@ -54,8 +54,43 @@ const _texts = {
   },
 };
 
-String _i18n(String text, [String? languageCode = "en"]) {
+String _i18n(String text, [String? languageCode]) {
+  if (languageCode == null) {
+    if (_currentLanguageCode == null) {
+      window.onLocaleChanged = _onLocaleChanged;
+      _onLocaleChanged();
+    }
+
+    languageCode = _currentLanguageCode;
+  }
+
   final textLanguages = _texts[text] ?? {"en": "{'$text' is not translated}"};
 
   return textLanguages[languageCode] ?? textLanguages["en"] ?? "{'$text' not translated to $languageCode}";
+}
+
+String? _currentLanguageCode;
+List<String>? _availableTranslations;
+
+void _onLocaleChanged() {
+  final availableLanguages = window.locales;
+
+  if (_availableTranslations == null) {
+    _availableTranslations = [];
+
+    for (final text in _texts.values) {
+      for (final key in text.keys) {
+        if (_availableTranslations!.contains(key) == false) {
+          _availableTranslations!.add(key);
+        }
+      }
+    }
+  }
+
+  for (final availableLanguage in availableLanguages) {
+    if (_availableTranslations!.contains(availableLanguage.languageCode)) {
+      _currentLanguageCode = availableLanguage.languageCode;
+      return;
+    }
+  }
 }
